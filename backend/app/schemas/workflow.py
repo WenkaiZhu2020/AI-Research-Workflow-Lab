@@ -9,6 +9,7 @@ class TaskConfig(BaseModel):
     top_p: float | None = Field(default=None, ge=0.0, le=1.0)
     provider_name: str = "ollama"
     structured_output: bool = False
+    output_schema: dict[str, Any] | None = None
 
 
 class PromptTemplate(BaseModel):
@@ -27,6 +28,10 @@ class WorkflowRunResult(BaseModel):
     output_text: str
     output_json: dict[str, Any] | None = None
     prompt_text: str
+    model_name: str
+    provider_name: str
+    temperature: float
+    latency_ms: float
 
 
 class PromptExperimentRequest(BaseModel):

@@ -53,13 +53,33 @@ async def run_workflow(
 
     prompt_text = build_prompt(task_input, prompt_template)
     start_time = perf_counter()
-    output_text = await provider_client.generate(
-        prompt=prompt_text,
-        model=task_config.model,
-        temperature=task_config.temperature,
-    )
+    output_json: dict[str, Any] | None = None
+
+    if task_config.structured_output and task_config.output_schema:
+        structured_result = await provider_client.generate_structured(
+            prompt=prompt_text,
+            model=task_config.model,
+            temperature=task_config.temperature,
+            schema=task_config.output_schema,
+        )
+        output_text = str(structured_result.get("response", "")).strip()
+        parsed_output = structured_result.get("parsed_output")
+        if isinstance(parsed_output, dict):
+            output_json = parsed_output
+        elif parsed_output is not None:
+            output_json = {"data": parsed_output}
+        else:
+            output_json = parse_output(output_text, True)
+    else:
+        output_text = await provider_client.generate(
+            prompt=prompt_text,
+            model=task_config.model,
+            temperature=task_config.temperature,
+        )
+
     latency_ms = round((perf_counter() - start_time) * 1000, 2)
-    output_json = parse_output(output_text, task_config.structured_output)
+    if output_json is None:
+        output_json = parse_output(output_text, task_config.structured_output)
 
     config_payload = task_config.model_dump()
     config_payload["latency_ms"] = latency_ms
@@ -88,4 +108,8 @@ async def run_workflow(
         output_text=output_text,
         output_json=output_json,
         prompt_text=prompt_text,
+        model_name=record.model_name,
+        provider_name=record.provider_name,
+        temperature=task_config.temperature,
+        latency_ms=latency_ms,
     )

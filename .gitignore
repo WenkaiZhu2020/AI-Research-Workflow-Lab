@@ -2,3 +2,4 @@
 backend/workflow_lab.db
 backend/__pycache__/
 backend/app/__pycache__/
+LOCAL_STUDY_GUIDE_CN.md

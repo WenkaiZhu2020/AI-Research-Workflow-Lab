@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 import httpx
@@ -52,8 +53,16 @@ class OllamaProvider(BaseProvider):
             response.raise_for_status()
 
         data = response.json()
+        raw_response = str(data.get("response", "")).strip()
+
+        try:
+            parsed_output = json.loads(raw_response)
+        except json.JSONDecodeError:
+            parsed_output = None
+
         return {
-            "response": data.get("response", ""),
+            "response": raw_response,
+            "parsed_output": parsed_output,
             "model": data.get("model", model),
             "done": data.get("done", False),
         }

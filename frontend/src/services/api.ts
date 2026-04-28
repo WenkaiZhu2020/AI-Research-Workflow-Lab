@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 import type {
+  PaperSummarizePayload,
   PromptExperimentPayload,
+  RepoExplainPayload,
   RunRecord,
   WorkflowRunResult,
 } from '../types/workflow'
@@ -27,6 +29,20 @@ export async function getHistoryList(): Promise<RunRecord[]> {
 
 export async function getHistoryDetail(id: number): Promise<RunRecord> {
   const response = await apiClient.get<RunRecord>(`/history/${id}`)
+  return response.data
+}
+
+export async function summarizePaper(
+  payload: PaperSummarizePayload,
+): Promise<WorkflowRunResult> {
+  const response = await apiClient.post<WorkflowRunResult>('/paper/summarize', payload)
+  return response.data
+}
+
+export async function explainRepo(
+  payload: RepoExplainPayload,
+): Promise<WorkflowRunResult> {
+  const response = await apiClient.post<WorkflowRunResult>('/repo/explain', payload)
   return response.data
 }
 

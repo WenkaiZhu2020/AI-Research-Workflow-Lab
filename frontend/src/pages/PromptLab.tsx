@@ -197,6 +197,12 @@ export function PromptLab() {
           </p>
         </div>
 
+        {isSubmitting ? (
+          <div className="rounded-md border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+            Running experiment and waiting for the model response...
+          </div>
+        ) : null}
+
         {errorMessage ? (
           <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {errorMessage}
@@ -205,11 +211,17 @@ export function PromptLab() {
 
         {result ? (
           <div className="space-y-4">
-            <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Run ID
-              </p>
-              <p className="mt-2 text-sm text-slate-900">{result.run_id}</p>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <MetadataCard label="Run ID" value={String(result.run_id)} />
+              <MetadataCard label="Model" value={result.model_name} />
+              <MetadataCard
+                label="Temperature"
+                value={result.temperature.toFixed(1)}
+              />
+              <MetadataCard
+                label="Latency"
+                value={`${result.latency_ms.toFixed(2)} ms`}
+              />
             </div>
 
             <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
@@ -219,6 +231,13 @@ export function PromptLab() {
               <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-sm leading-6 text-slate-900">
                 {result.output_text}
               </pre>
+            </div>
+
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Provider
+              </p>
+              <p className="mt-2 text-sm text-slate-900">{result.provider_name}</p>
             </div>
 
             <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
@@ -247,6 +266,17 @@ export function PromptLab() {
           </div>
         )}
       </section>
+    </div>
+  )
+}
+
+function MetadataCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+        {label}
+      </p>
+      <p className="mt-2 text-sm text-slate-900">{value}</p>
     </div>
   )
 }
