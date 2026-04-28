@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     api_prefix: str = "/api"
     environment: str = "development"
+    database_url: str = "sqlite:///./workflow_lab.db"
 
     model_config = SettingsConfigDict(
         env_file=".env",
