@@ -6,29 +6,23 @@ const navigationItems = [
   { to: '/repo-explainer', label: 'Repo Explainer' },
   { to: '/prompt-lab', label: 'Prompt Lab' },
   { to: '/history', label: 'History' },
-  { to: '/settings', label: 'Settings' },
 ]
 
-export function AppLayout() {
+export function Layout() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
         <header className="border-b border-slate-200 pb-5">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-slate-500">AI workflow sandbox</p>
-              <h1 className="text-3xl font-semibold tracking-normal text-slate-950">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold tracking-normal text-slate-950">
                 AI Research Workflow Lab
               </h1>
-              <p className="max-w-2xl text-sm leading-6 text-slate-600">
-                A lightweight environment for prompt experiments, paper summaries,
-                and repository understanding.
+              <p className="mt-2 text-sm text-slate-600">
+                Lightweight tools for paper summarization, repo explanation, and prompt experiments.
               </p>
             </div>
-            <nav
-              aria-label="Primary"
-              className="flex flex-wrap gap-2"
-            >
+            <nav aria-label="Primary navigation" className="flex flex-wrap gap-2">
               {navigationItems.map((item) => (
                 <NavLink
                   key={item.to}
