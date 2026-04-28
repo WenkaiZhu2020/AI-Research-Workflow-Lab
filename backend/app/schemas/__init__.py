@@ -1,5 +1,6 @@
 from app.schemas.history import RunRecordSchema
 from app.schemas.workflow import (
+    PromptExperimentRequest,
     PromptTemplate,
     TaskConfig,
     TaskInput,
@@ -7,6 +8,7 @@ from app.schemas.workflow import (
 )
 
 __all__ = [
+    "PromptExperimentRequest",
     "PromptTemplate",
     "RunRecordSchema",
     "TaskConfig",

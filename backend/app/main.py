@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api import api_router
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine
@@ -20,3 +21,6 @@ def on_startup() -> None:
 @app.get("/health", tags=["system"])
 def health_check() -> dict[str, str]:
     return {"status": "ok"}
+
+
+app.include_router(api_router, prefix=settings.api_prefix)

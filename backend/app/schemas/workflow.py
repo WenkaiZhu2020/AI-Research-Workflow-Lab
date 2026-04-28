@@ -27,3 +27,9 @@ class WorkflowRunResult(BaseModel):
     output_text: str
     output_json: dict[str, Any] | None = None
     prompt_text: str
+
+
+class PromptExperimentRequest(BaseModel):
+    task_input: TaskInput
+    task_config: TaskConfig
+    prompt_template: PromptTemplate
