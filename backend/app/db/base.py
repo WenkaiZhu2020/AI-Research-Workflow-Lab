@@ -5,4 +5,4 @@ class Base(DeclarativeBase):
     pass
 
 
-from app.models.run_record import RunRecord  # noqa: E402,F401
+from app import models  # noqa: E402,F401

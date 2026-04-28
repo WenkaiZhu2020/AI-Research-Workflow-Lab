@@ -20,3 +20,10 @@ class TaskInput(BaseModel):
     raw_input: str = Field(min_length=1)
     task_type: str
     metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class WorkflowRunResult(BaseModel):
+    run_id: int
+    output_text: str
+    output_json: dict[str, Any] | None = None
+    prompt_text: str
