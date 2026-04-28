@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     api_prefix: str = "/api"
     environment: str = "development"
     database_url: str = "sqlite:///./workflow_lab.db"
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_default_model: str = "llama3.2"
 
     model_config = SettingsConfigDict(
         env_file=".env",
